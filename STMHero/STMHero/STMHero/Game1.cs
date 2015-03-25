@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-
+using STMHero.View;
 namespace STMHero
 {
     /// <summary>
@@ -19,13 +19,17 @@ namespace STMHero
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        GraphicClass logo;
+        GraphicClass backGround;
+       
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            graphics.PreferredBackBufferHeight = 720;
             graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
         }
 
         /// <summary>
@@ -36,7 +40,9 @@ namespace STMHero
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            logo = new GraphicClass();
+            backGround = new GraphicClass();
+          
             base.Initialize();
         }
 
@@ -49,6 +55,21 @@ namespace STMHero
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            //loading textures
+            logo.texture = Content.Load<Texture2D>("logo");
+            backGround.texture = Content.Load<Texture2D>("background");
+
+            //updating position to the center of screen
+            Vector2 centeredPositon = new Vector2(spriteBatch.GraphicsDevice.Viewport.Width / 2, spriteBatch.GraphicsDevice.Viewport.Height / 2);
+
+            logo.position = centeredPositon;
+            backGround.position =centeredPositon;
+
+            //scaling to size of screen
+            float scale = ((float)spriteBatch.GraphicsDevice.Viewport.Width / backGround.texture.Width) < ((float)spriteBatch.GraphicsDevice.Viewport.Height / backGround.texture.Height) ? ((float)spriteBatch.GraphicsDevice.Viewport.Width / backGround.texture.Width) : ((float)spriteBatch.GraphicsDevice.Viewport.Height / backGround.texture.Height) ;
+
+            backGround.scale = scale;
+            logo.scale = scale; 
             // TODO: use this.Content to load your game content here
         }
 
@@ -85,6 +106,12 @@ namespace STMHero
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            spriteBatch.Begin();
+
+            backGround.Draw(spriteBatch);
+            logo.Draw(spriteBatch);
+
+            spriteBatch.End();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
