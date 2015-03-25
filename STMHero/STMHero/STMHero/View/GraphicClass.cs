@@ -16,7 +16,7 @@ namespace STMHero.View
 
         public GraphicClass()
         {
-            position = new Vector2(0, 0);
+            position = new Vector2(0, 0); 
             scale = 1f;
         }
 
