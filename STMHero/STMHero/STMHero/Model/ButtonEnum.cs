@@ -5,8 +5,9 @@ using System.Text;
 
 namespace STMHero.Model
 {
-    public enum buttonType
+    public enum buttonEnum
     {
-        red, green, yellow, blue
+        blue, red, green, yellow
+        
     };
 }
